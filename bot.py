@@ -1,10 +1,10 @@
 import os
 from pytube import YouTube
 from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 from dotenv import load_dotenv
 
-# Завантаження змінних середовища з .env файлу
+# Завантаження змінних середовища з файлу .env
 load_dotenv()
 
 # Ваш Telegram токен
@@ -15,14 +15,14 @@ if not TELEGRAM_TOKEN:
     print("Помилка: Токен не знайдено у файлі .env")
     exit(1)
 else:
-    print("Токен успішно завантажено")
+    print(f"Токен успішно завантажено: {TELEGRAM_TOKEN}")
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    await update.message.reply_text('Привіт! Надішліть мені посилання на YouTube відео, і я надішлю вам аудіо!')
+def start(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text('Привіт! Надішліть мені посилання на YouTube відео, і я надішлю вам аудіо!')
 
-async def download_audio(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+def download_audio(update: Update, context: CallbackContext) -> None:
     url = update.message.text
-    await update.message.reply_text('Завантаження аудіо, будь ласка, зачекайте...')
+    update.message.reply_text('Завантаження аудіо, будь ласка, зачекайте...')
 
     try:
         # Завантаження аудіо з YouTube
@@ -31,19 +31,20 @@ async def download_audio(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         audio_file = stream.download()
 
         # Надсилання аудіо в Telegram
-        with open(audio_file, 'rb') as audio:
-            await context.bot.send_audio(chat_id=update.message.chat_id, audio=audio)
+        context.bot.send_audio(chat_id=update.message.chat_id, audio=open(audio_file, 'rb'))
         os.remove(audio_file)
     except Exception as e:
-        await update.message.reply_text(f'Сталася помилка: {e}')
+        update.message.reply_text(f'Сталася помилка: {e}')
 
 def main() -> None:
-    application = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
+    updater = Updater(TELEGRAM_TOKEN, use_context=True)
 
-    application.add_handler(CommandHandler("start", start))
-    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, download_audio))
+    dispatcher = updater.dispatcher
+    dispatcher.add_handler(CommandHandler("start", start))
+    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, download_audio))
 
-    application.run_polling()
+    updater.start_polling()
+    updater.idle()
 
 if __name__ == '__main__':
     main()
