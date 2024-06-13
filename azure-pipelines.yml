@@ -1,8 +1,17 @@
+<<<<<<< HEAD
 trigger:
 - main
 
 pool:
   vmImage: 'ubuntu-latest'
+=======
+name: Azure Web App
+
+on:
+  push:
+    branches:
+      - main
+>>>>>>> f1ecfdc5c944245a844794505f7bb5d053f9c447
 
 steps:
 - task: UsePythonVersion@0
@@ -15,6 +24,7 @@ steps:
     pip install -r requirements.txt
   displayName: 'Install dependencies'
 
+<<<<<<< HEAD
 - task: AzureCLI@2
   inputs:
     azureSubscription: 'AZURE_CREDENTIALS'
