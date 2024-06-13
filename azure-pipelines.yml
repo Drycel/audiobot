@@ -2,7 +2,7 @@ trigger:
 - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: 'Default'  # Використовуємо існуючий пул агентів
 
 steps:
 - task: UsePythonVersion@0
