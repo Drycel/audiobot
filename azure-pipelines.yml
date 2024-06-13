@@ -17,7 +17,7 @@ steps:
 
 - task: AzureWebApp@1
   inputs:
-    azureSubscription: 'AZURE_CREDENTIALS'
+    azureSubscription: 'MyAzureServiceConnection'  # Використовуємо існуюче з'єднання
     appName: 'drycelaudiobot'
     package: '$(Build.ArtifactStagingDirectory)/package.zip'
   displayName: 'Deploy to Azure Web App'
