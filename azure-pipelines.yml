@@ -6,7 +6,7 @@ trigger:
       - main
 
 jobs:
-- job: build-and-deploy
+- job: build_and_deploy  # Виправлене ім'я завдання
   pool:
     vmImage: 'ubuntu-latest'
 
@@ -38,4 +38,10 @@ jobs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
       ArtifactName: 'drop'
       publishLocation: 'Container'
+
+  - task: AzureWebApp@1
+    inputs:
+      azureSubscription: 'MyAzureServiceConnection'
+      appName: 'drycelaudiobot'
+      package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
 
