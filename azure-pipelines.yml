@@ -8,8 +8,13 @@ trigger:
 jobs:
 - job: build_and_deploy  # Виправлене ім'я завдання
   pool:
+<<<<<<< HEAD
     name: 'Azure Pipelines'
     vmImage: 'ubuntu-latest'
+=======
+    name: 'Hosted Agent'
+    vmImage: 'ubuntu-latest'  # Використовуємо останню версію Ubuntu
+>>>>>>> ca77fd7 (Added azure-pipelines.yml for Azure DevOps pipeline)
 
   steps:
   - task: UsePythonVersion@0
