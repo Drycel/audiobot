@@ -8,7 +8,7 @@ trigger:
 jobs:
 - job: build_and_deploy  # Виправлене ім'я завдання
   pool:
-    name: 'Azure Piplines'
+    name: 'Azure Pipelines'
     vmImage: 'ubuntu-latest'
 
   steps:
