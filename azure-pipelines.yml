@@ -8,6 +8,7 @@ trigger:
 jobs:
 - job: build_and_deploy  # Виправлене ім'я завдання
   pool:
+    name: 'newpool'
     vmImage: 'ubuntu-latest'
 
   steps:
