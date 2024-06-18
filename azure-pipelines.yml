@@ -7,8 +7,8 @@ trigger:
 
 jobs:
 - job: build_and_deploy
-  pool:
-    vmImage: 'ubuntu-latest'  # Використовуємо хостований агент з останньою версією Ubuntu
+  pool: Azure Pipelines
+    
 
   steps:
   - task: UsePythonVersion@0
