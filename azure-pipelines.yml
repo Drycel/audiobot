@@ -42,7 +42,7 @@ jobs:
   - task: AzureWebApp@1
     inputs:
       appType: 'webApp'
-      azureSubscription: 'MyAzureServiceConnection'
+      azureSubscription: 'Azure subscribcion 1(9b251bc4-1163-4ba1-8d59-d93965e4829c) '
       appName: 'app-euw-ado-agent'
       package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
 
