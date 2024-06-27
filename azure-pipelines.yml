@@ -7,7 +7,7 @@ trigger:
 
 jobs:
 - job: build_and_deploy
-  pool: Azure Pipelines
+  pool: pool-euw-ado-agent
     
 
   steps:
@@ -41,7 +41,8 @@ jobs:
 
   - task: AzureWebApp@1
     inputs:
+      appType: 'webApp'
       azureSubscription: 'MyAzureServiceConnection'
-      appName: 'drycelaudiobot'
+      appName: 'bot-euw-ado-agent'
       package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
 
