@@ -43,6 +43,6 @@ jobs:
     inputs:
       appType: 'webApp'
       azureSubscription: 'MyAzureServiceConnection'
-      appName: 'bot-euw-ado-agent'
+      appName: 'app-euw-ado-agent'
       package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
 
