@@ -14,8 +14,15 @@ jobs:
 
   steps:
   - script: |
-      sudo apt-get update
-      sudo apt-get install -y python3.10 python3.10-venv python3.10-dev
+      if command -v sudo > /dev/null; then
+        echo "sudo is available"
+        sudo apt-get update
+        sudo apt-get install -y python3.10 python3.10-venv python3.10-dev
+      else
+        echo "sudo is not available"
+        apt-get update
+        apt-get install -y python3.10 python3.10-venv python3.10-dev
+      fi
       python3.10 -m venv venv
       source venv/bin/activate
       python -m pip install --upgrade pip
