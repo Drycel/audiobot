@@ -5,16 +5,20 @@ trigger:
     include:
       - main
 
+variables:
+  GITHUB_TOKEN: $(GITHUB_TOKEN)
+
 jobs:
 - job: build_and_deploy
   pool: pool-euw-ado-agent
-    
 
   steps:
   - task: UsePythonVersion@0
     inputs:
       versionSpec: '3.10'
       addToPath: true
+    env:
+      GITHUB_TOKEN: $(GITHUB_TOKEN)
 
   - script: |
       python -m pip install --upgrade pip
@@ -42,7 +46,7 @@ jobs:
   - task: AzureWebApp@1
     inputs:
       appType: 'webApp'
-      azureSubscription: 'MyAzureServiceConnection '
+      azureSubscription: 'MyAzureServiceConnection'
       appName: 'app-euw-ado-agent'
       package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
 
